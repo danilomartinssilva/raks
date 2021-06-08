@@ -5,32 +5,19 @@ import IUsersRepository from '../repositories/IUsersRepository';
 
 
 interface IRequest {
-  name: string;
-  dob: Date;
-  description: string;
-  address: string;
+  id: number;
 }
 
 @injectable()
-export default class CreateUserUseCase {
+export default class DeleteUserUseCase {
   constructor(
     @inject('logger') private logger: ILogger,
     @inject('UsersRepository')
     private usersRepository: IUsersRepository
   ) {}
 
-  public async execute({
-    name,
-    dob,
-    description,
-    address,
-  }: IRequest): Promise<any> {
-    const userAdd = this.usersRepository.create({
-      name,
-      dob,
-      description,
-      address,
-    });
+  public async execute({ id }: IRequest): Promise<any> {
+    const userAdd = this.usersRepository.delete({ id });
     return userAdd;
   }
 }

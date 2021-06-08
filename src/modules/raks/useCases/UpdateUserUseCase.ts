@@ -9,10 +9,11 @@ interface IRequest {
   dob: Date;
   description: string;
   address: string;
+  id: number;
 }
 
 @injectable()
-export default class CreateUserUseCase {
+export default class UpdateUserUseCase {
   constructor(
     @inject('logger') private logger: ILogger,
     @inject('UsersRepository')
@@ -24,12 +25,14 @@ export default class CreateUserUseCase {
     dob,
     description,
     address,
+    id,
   }: IRequest): Promise<any> {
-    const userAdd = this.usersRepository.create({
-      name,
+    const userAdd = this.usersRepository.update({
+      id,
       dob,
       description,
       address,
+      name,
     });
     return userAdd;
   }

@@ -12,25 +12,17 @@ interface IRequest {
 }
 
 @injectable()
-export default class CreateUserUseCase {
+export default class ListUsersUseCase {
   constructor(
     @inject('logger') private logger: ILogger,
     @inject('UsersRepository')
     private usersRepository: IUsersRepository
   ) {}
 
-  public async execute({
-    name,
-    dob,
-    description,
-    address,
-  }: IRequest): Promise<any> {
-    const userAdd = this.usersRepository.create({
-      name,
-      dob,
-      description,
-      address,
+  public async execute(): Promise<any> {
+    const users = await this.usersRepository.find().catch((err)=>{
+      console.log('Error',err)
     });
-    return userAdd;
+    return users;
   }
 }
