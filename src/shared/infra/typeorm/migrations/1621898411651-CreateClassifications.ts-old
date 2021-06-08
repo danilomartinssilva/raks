@@ -1,0 +1,60 @@
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+
+export class CreateClassifications1621898411651 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.createTable(
+      new Table({
+        name: 'classifications',
+        columns: [
+          {
+            name: 'id',
+            type: 'serial',
+            isPrimary: true,
+            isNullable: false,
+          },
+          {
+            name: 'name',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'code',
+            type: 'varchar',
+            isNullable: false,
+          },
+          
+          {
+            name: 'category_id',
+            type: 'serial',
+          },
+
+          {
+            name: 'created_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+        ],
+        foreignKeys: [
+          {
+            name: 'FKTreeCategoryClassifications',
+            referencedTableName: 'categories',
+            referencedColumnNames: ['id'],
+            columnNames: ['category_id'],
+            onDelete: 'SET NULL',
+            onUpdate: 'SET NULL',
+          },
+       
+        ],
+      })
+    );
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropTable('classifications');
+  }
+}
