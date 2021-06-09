@@ -19,7 +19,7 @@ userRouter.route('/').post(
   }),
   userController.create
 );
-userRouter.route('/').put(
+userRouter.route('/:id').put(
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -41,16 +41,6 @@ userRouter.route('/:id').delete(
   }),
   userController.remove
 );
-userRouter.route('/').get(
-  /*  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      dob: Joi.string().required(),
-      description: Joi.string().required(),
-      address: Joi.string().required(),
-    },
-  }), */
-  userController.clistreate
-);
+userRouter.route('/').get(userController.clistreate);
 
 export default userRouter;

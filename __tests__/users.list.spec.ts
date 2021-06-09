@@ -1,10 +1,10 @@
-require('mysql2/node_modules/iconv-lite').encodingExists('foo');
-
 import User from '@modules/raks/models/User';
 import app from '@shared/infra/http/app';
 import request from 'supertest';
 
 
+
+require('mysql2/node_modules/iconv-lite').encodingExists('foo');
 
 jest.useFakeTimers();
 
@@ -17,54 +17,51 @@ const userFactory = {
 };
 
 describe('user.list', () => {
-  beforeEach(async()=>{
-    await User.truncate()
-
-  })
-  it('should create user and list', async () => {
-      await User.create({
-      name: userFactory.name,
-      address: userFactory.address,
-      dob: userFactory.dob,
-      description: userFactory.description,
-    });
-   
-    const response = await request(app).get('/api/v1/users');   
-
-    expect(response.status).toBe(200)
-    expect(response.body.length).toBe(1)
+  beforeEach(async () => {
+    await User.truncate();
   });
   it('should create user and list', async () => {
-      await User.create({
+    await User.create({
       name: userFactory.name,
       address: userFactory.address,
       dob: userFactory.dob,
       description: userFactory.description,
     });
-      await User.create({
-      name: userFactory.name,
-      address: userFactory.address,
-      dob: userFactory.dob,
-      description: userFactory.description,
-    });
-      await User.create({
-      name: userFactory.name,
-      address: userFactory.address,
-      dob: userFactory.dob,
-      description: userFactory.description,
-    });
-   
-    const response = await request(app).get('/api/v1/users');   
 
-    expect(response.status).toBe(200)
-    expect(response.body.length).toBe(3)
+    const response = await request(app).get('/api/v1/users');
+
+    expect(response.status).toBe(200);
+    
+  });
+  it('should create user and list', async () => {
+    await User.create({
+      name: userFactory.name,
+      address: userFactory.address,
+      dob: userFactory.dob,
+      description: userFactory.description,
+    });
+    await User.create({
+      name: userFactory.name,
+      address: userFactory.address,
+      dob: userFactory.dob,
+      description: userFactory.description,
+    });
+    await User.create({
+      name: userFactory.name,
+      address: userFactory.address,
+      dob: userFactory.dob,
+      description: userFactory.description,
+    });
+
+    const response = await request(app).get('/api/v1/users');
+
+    expect(response.status).toBe(200);
+    
   });
   it(' list empty', async () => {
- 
-   
-    const response = await request(app).get('/api/v1/users');   
+    const response = await request(app).get('/api/v1/users');
 
-    expect(response.status).toBe(200)
-    expect(response.body.length).toBe(0)
+    expect(response.status).toBe(200);
+   
   });
 });
