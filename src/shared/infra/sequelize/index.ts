@@ -1,16 +1,8 @@
 import { Sequelize } from 'sequelize';
 
-//
-
-/* constructor(database: string, username: string, password?: string, options?: Options); */
-
-/**
- * username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    dialect: process.env.DB_CONNECTION,
- */
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
+});
 
 export const sequelize = new Sequelize({
   username: process.env.DB_USER,
@@ -20,7 +12,7 @@ export const sequelize = new Sequelize({
   dialect: 'mysql',
 });
 try {
-  sequelize.authenticate()
+  sequelize.authenticate();
 
   console.log('Connection Mysql has been established successfully. 🌟🍺');
 } catch (error) {
